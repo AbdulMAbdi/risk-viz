@@ -1,13 +1,11 @@
 "use client";
 
 import React, { Suspense, useEffect, useState } from "react";
-import { Canvas } from "@react-three/fiber";
 
 import handler from "../../lib/staticdata";
 import MapHeader from "./components/MapHeader";
 import DataTable from "./components/DataTable";
 import LineChart from "./components/LineChart";
-import Loading3D from "./components/Loading3D";
 
 const MapContainer = React.lazy(() => import("./components/MapContainer"));
 
@@ -138,15 +136,7 @@ export default function Home() {
   return (
     <main className="flex flex-col-reverse overflow-visible">
       {" "}
-      <Suspense
-        fallback={
-          <div className="w-screen h-screen">
-            <Canvas>
-              <Loading3D />
-            </Canvas>
-          </div>
-        }
-      >
+      <Suspense fallback={<div className="w-screen h-screen">loading..</div>}>
         {climateData && isMap && (
           <MapContainer data={mapData} region={region}></MapContainer>
         )}
