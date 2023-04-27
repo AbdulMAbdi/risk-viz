@@ -11,12 +11,12 @@ import Loading3D from "./components/Loading3D";
 
 const MapContainer = React.lazy(() => import("./components/MapContainer"));
 
-function getRandomLatLong(from: number, to: number, fixed: number): number {
+function getRandomLatLong(from, to, fixed) {
   return parseFloat((Math.random() * (to - from) + from).toFixed(fixed));
   // .toFixed() returns string, so ' * 1' is a trick to convert to number
 }
 
-function firstDigit(num: number): number {
+function firstDigit(num) {
   // 1: get first digit using regex pattern
   const matches = String(num).match(/\d/);
   // 2: convert matched item to integer
@@ -28,7 +28,7 @@ function firstDigit(num: number): number {
   return digit;
 }
 
-function randomYearinDecade(min: number, max: number): number {
+function randomYearinDecade(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
@@ -76,7 +76,7 @@ export default function Home() {
       let data = await handler();
       let assests;
       let factors;
-      data = data.map((point: object, index: number) => ({
+      data = data.map((point, index) => ({
         ...point,
         id: index,
         Region:

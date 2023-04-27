@@ -4,6 +4,7 @@ import { blue } from "@mui/material/colors";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
+import Image from "next/image";
 
 export default function MapHeader({
   setDecade,
@@ -188,7 +189,7 @@ export default function MapHeader({
                   class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
                   href="#"
                 >
-                  2030's
+                  2030&apos;s
                 </a>
               </li>
               <li
@@ -202,7 +203,7 @@ export default function MapHeader({
                   class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
                   href="#"
                 >
-                  2040's
+                  2040&apos;s
                 </a>
               </li>
               <li
@@ -216,7 +217,7 @@ export default function MapHeader({
                   class="rounded-b bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
                   href="#"
                 >
-                  2050's
+                  2050&apos;s
                 </a>
               </li>
               <li
@@ -230,7 +231,7 @@ export default function MapHeader({
                   class="rounded-b bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
                   href="#"
                 >
-                  2060
+                  2060&apos;s
                 </a>
               </li>
               <li
@@ -244,7 +245,7 @@ export default function MapHeader({
                   class="rounded-b bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
                   href="#"
                 >
-                  2070's
+                  2070&apos;s
                 </a>
               </li>
               <li
@@ -380,12 +381,12 @@ export default function MapHeader({
         </div>
         <div class="pl-4">
           <div class="group inline-block relative">
-            <img
+            <Image
               src="/logos/logoicon.png"
               alt="climateriskanalysis-high-resolution-color-logo"
               class="group inline-block relative object-fill"
               border="0"
-            ></img>
+            ></Image>
           </div>
         </div>
         <div class="p-1">
