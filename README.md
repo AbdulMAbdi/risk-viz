@@ -33,6 +33,7 @@ The Data Table button will show the data in a table where selected filters will 
 
 ## Notes
 - The sample data is manipulated in the code to allow for a better representation of the data. Specifically, the location data is randomized evenly across the regions to allow for a better visualization of the markers on the map. The year data is also randomized so that there are more years represented besides just the first year of every decade.
+- Best viewed on desktop, mobile optimizations are being developed
 
 ## Sources and Libraries
 
