@@ -2,58 +2,18 @@
 
 import React, { Suspense, useEffect, useState } from "react";
 
-import handler from "../../lib/staticdata";
+import {
+  getRandomLatLong,
+  firstDigit,
+  randomYearinDecade,
+  getRegion,
+  dataHandler,
+} from "../../lib/utils";
 import MapHeader from "./components/MapHeader";
 import DataTable from "./components/DataTable";
 import LineChart from "./components/LineChart";
 
 const MapContainer = React.lazy(() => import("./components/MapContainer"));
-
-function getRandomLatLong(from, to, fixed) {
-  return parseFloat((Math.random() * (to - from) + from).toFixed(fixed));
-  // .toFixed() returns string, so ' * 1' is a trick to convert to number
-}
-
-function firstDigit(num) {
-  // 1: get first digit using regex pattern
-  const matches = String(num).match(/\d/);
-  // 2: convert matched item to integer
-  let digit = 0;
-  if (matches) {
-    digit = Number(matches[0]);
-  }
-  // 3: add sign back as needed
-  return digit;
-}
-
-function randomYearinDecade(min, max) {
-  return Math.floor(Math.random() * (max - min + 1) + min);
-}
-
-const regionBoundBoxes = [
-  {
-    Region: "North America",
-    LatRange: [30.239, 61.606],
-    LongRange: [-127.89, -71.203],
-  },
-  { Region: "Europe", LatRange: [36.597, 68.784], LongRange: [-6.152, 34.98] },
-  { Region: "Asia", LatRange: [-7.536, 59.712], LongRange: [59.765, 136.58] },
-  {
-    Region: "Africa",
-    LatRange: [-31.952, 36.031],
-    LongRange: [-7.031, 50.273],
-  },
-  {
-    Region: "Oceania",
-    LatRange: [-39.909, -12.039],
-    LongRange: [115.839, 155.742],
-  },
-  {
-    Region: "South America",
-    LatRange: [-36.879, 9.622],
-    LongRange: [-75.41, -37.089],
-  },
-];
 
 export default function Home() {
   const [climateData, setClimateData] = useState();
@@ -71,28 +31,20 @@ export default function Home() {
 
   useEffect(() => {
     async function getData() {
-      let data = await handler();
+      let data = await dataHandler();
       let assests;
       let factors;
       data = data.map((point, index) => ({
         ...point,
         id: index,
-        Region:
-          regionBoundBoxes[firstDigit(index) <= 5 ? firstDigit(index) : 0]
-            .Region,
+        Region: getRegion(firstDigit(index) <= 5 ? firstDigit(index) : 0),
         Lat: getRandomLatLong(
-          regionBoundBoxes[firstDigit(index) <= 5 ? firstDigit(index) : 0]
-            .LatRange[0],
-          regionBoundBoxes[firstDigit(index) <= 5 ? firstDigit(index) : 0]
-            .LatRange[1],
-          3
+          firstDigit(index) <= 5 ? firstDigit(index) : 0,
+          "LatRange"
         ),
         Long: getRandomLatLong(
-          regionBoundBoxes[firstDigit(index) <= 5 ? firstDigit(index) : 0]
-            .LongRange[0],
-          regionBoundBoxes[firstDigit(index) <= 5 ? firstDigit(index) : 0]
-            .LongRange[1],
-          3
+          firstDigit(index) <= 5 ? firstDigit(index) : 0,
+          "LongRange"
         ),
         Year: randomYearinDecade(point["Year"] + 10, point["Year"]),
         "Risk Factors": JSON.parse(point["Risk Factors"]),

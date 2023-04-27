@@ -85,8 +85,8 @@ export default function MapHeader({
   ));
 
   return (
-    <nav class="bg-gray-50  bg-opacity-50 border-black border-2 dark:bg-gray-900 dark:border-gray-700 overflow-visible">
-      <div class="max-w-full flex flex-wrap items-center justify-between mx-20 p-1 overflow-visible">
+    <nav class="max-h-24 bg-gray-50  bg-opacity-50 border-black border-2 dark:bg-gray-900 dark:border-gray-700 overflow-visible">
+      <div class="max-w-full flex flex-wrap items-center justify-between mx-12 p-1 overflow-visible">
         <div class="p-1">
           <div class="group inline-block relative">
             <button class="bg-blue-400 text-gray-700 font-semibold py-2 px-4 rounded inline-flex items-center">
@@ -385,6 +385,8 @@ export default function MapHeader({
               src="/logos/logoicon.png"
               alt="climateriskanalysis-high-resolution-color-logo"
               class="group inline-block relative object-fill"
+              width={96}
+              height={96}
               border="0"
             ></Image>
           </div>

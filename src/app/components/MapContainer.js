@@ -4,9 +4,10 @@ import Markers from "./Markers";
 
 const containerStyle = {
   width: "100vw",
-  height: "84.8vh",
+  height: "89.7vh",
 };
 
+// holds center coordinates for regions to allow for map to recenter on region filter change
 const regionCenters = {
   "North America": {
     lat: 43.516,

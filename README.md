@@ -1,36 +1,47 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Risk Analysis Work Sample for UI/UX Developers
 
-## Getting Started
+Given the following sample [Climate Risk Rating dataset](https://docs.google.com/spreadsheets/d/1Y_yiT-_7IimioBvcqiCPwLzTLazfdRyzZ4k3cpQXiAw/edit#gid=681415175),created an interactive web application that displays the data from the sample in table, chart and interactive map form.
 
-First, run the development server:
+## Overview
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+### Filter DropDown Menus:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The Asset Name menu will allow you to find locations represented by the selected asset name
+The Region menu will allow you to filter locations by continent
+The Risk Factor menu will allow you to filter by various risk factors and update risk ratings to the risk for that specific factor
+The Decade menu will allow you to filter by decade
+The Business Category Menu will allow you to filter by industry
+Filter selections can be combined and persist across the chosen data display
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Data Displays:
 
-[http://localhost:3000/api/hello](http://localhost:3000/api/hello) is an endpoint that uses [Route Handlers](https://beta.nextjs.org/docs/routing/route-handlers). This endpoint can be edited in `app/api/hello/route.ts`.
+#### Map:
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Green markers indicate a location that has a risk rating less than 0.33
+Orange markers indicate a location that has a risk rating less than 0.66 but greater than 0.33
+Red Markers indicate a location that has a risk rating greater than 0.66
 
-## Learn More
+Click a marker to get more information on the asset at that location
 
-To learn more about Next.js, take a look at the following resources:
+#### Chart:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The Line Chart button will represent the data on a line graph. X axis represents the year and will adapt to decade filters, the default is all decades in the data set. The Y axis represents risk rating and adapts to risk factor filter(i.e if Earthquake risk factor is selected then the earthquake rating will be used)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+#### Table:
 
-## Deploy on Vercel
+The Data Table button will show the data in a table where selected filters will apply and filters can continue to be applied. Sorting by descending or ascending order is available on columns. The risk factors column can be filter to include data points that have only the chosen risk factor, this can also be accomplished by using the risk factor dropdown menu located in the navigation bar.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Notes
+- The sample data is manipulated in the code to allow for a better representation of the data. Specifically the location data is randomized evenly across the regions to allow for a better visualization of the markers on the map. The year data is also randomized so that there are more years represented besides just the first year of every decade
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Sources and Libraries
+
+Various code examples and demonstrations from the following documentation was used to create this web application
+
+- [React-GoogleMaps](https://tomchentw.github.io/react-google-maps/#documentation)
+- [Google Maps](https://developers.google.com/maps/documentation/javascript)
+- [Tailwind](https://tailwindcss.com/docs/)
+- [MaterialUI](https://mui.com/material-ui/api/)
+- [PapaParse](https://www.papaparse.com/docs)
+- [React](https://react.dev/reference/react)
+- [Next](https://nextjs.org/docs/)
