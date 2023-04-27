@@ -1,116 +1,172 @@
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
+"use client";
 
-const inter = Inter({ subsets: ['latin'] })
+import React, { Suspense, useEffect, useState } from "react";
+import { Canvas } from "@react-three/fiber";
+
+import handler from "../../lib/staticdata";
+import MapHeader from "./components/MapHeader";
+import DataTable from "./components/DataTable";
+import LineChart from "./components/LineChart";
+import Loading3D from "./components/Loading3D";
+
+const MapContainer = React.lazy(() => import("./components/MapContainer"));
+
+function getRandomLatLong(from: number, to: number, fixed: number): number {
+  return parseFloat((Math.random() * (to - from) + from).toFixed(fixed));
+  // .toFixed() returns string, so ' * 1' is a trick to convert to number
+}
+
+function firstDigit(num: number): number {
+  // 1: get first digit using regex pattern
+  const matches = String(num).match(/\d/);
+  // 2: convert matched item to integer
+  let digit = 0;
+  if (matches) {
+    digit = Number(matches[0]);
+  }
+  // 3: add sign back as needed
+  return digit;
+}
+
+function randomYearinDecade(min: number, max: number): number {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+const regionBoundBoxes = [
+  {
+    Region: "North America",
+    LatRange: [30.239, 61.606],
+    LongRange: [-127.89, -71.203],
+  },
+  { Region: "Europe", LatRange: [36.597, 68.784], LongRange: [-6.152, 34.98] },
+  { Region: "Asia", LatRange: [-7.536, 59.712], LongRange: [59.765, 136.58] },
+  {
+    Region: "Africa",
+    LatRange: [-31.952, 36.031],
+    LongRange: [-7.031, 50.273],
+  },
+  {
+    Region: "Oceania",
+    LatRange: [-39.909, -12.039],
+    LongRange: [115.839, 155.742],
+  },
+  {
+    Region: "South America",
+    LatRange: [-36.879, 9.622],
+    LongRange: [-75.41, -37.089],
+  },
+];
 
 export default function Home() {
+  const [climateData, setClimateData] = useState();
+  const [decade, setDecade] = useState(0);
+  const [category, setCategory] = useState("All");
+  const [asset, setAsset] = useState("All");
+  const [region, setRegion] = useState("All");
+  const [factor, setFactors] = useState("All");
+  const [isDataTable, setDataTable] = useState(false);
+  const [isChart, setChart] = useState(false);
+  const [isMap, setMap] = useState(true);
+  const [mapData, setMapData] = useState([]);
+  const [assests, setAssests] = useState([]);
+  const [riskFactors, setRiskFactors] = useState([]);
+
+  useEffect(() => {
+    async function getData() {
+      let data = await handler();
+      let assests;
+      let factors;
+      data = data.map((point: object, index: number) => ({
+        ...point,
+        id: index,
+        Region:
+          regionBoundBoxes[firstDigit(index) <= 5 ? firstDigit(index) : 0]
+            .Region,
+        Lat: getRandomLatLong(
+          regionBoundBoxes[firstDigit(index) <= 5 ? firstDigit(index) : 0]
+            .LatRange[0],
+          regionBoundBoxes[firstDigit(index) <= 5 ? firstDigit(index) : 0]
+            .LatRange[1],
+          3
+        ),
+        Long: getRandomLatLong(
+          regionBoundBoxes[firstDigit(index) <= 5 ? firstDigit(index) : 0]
+            .LongRange[0],
+          regionBoundBoxes[firstDigit(index) <= 5 ? firstDigit(index) : 0]
+            .LongRange[1],
+          3
+        ),
+        Year: randomYearinDecade(point["Year"] + 10, point["Year"]),
+        "Risk Factors": JSON.parse(point["Risk Factors"]),
+      }));
+      assests = new Set(data.map((point) => point["Asset Name"]));
+      factors = new Set(
+        data.map((point) => Object.keys(point["Risk Factors"])).flat()
+      );
+
+      assests = Array.from(assests);
+      factors = Array.from(factors);
+      setClimateData(data);
+      setRiskFactors(factors);
+      setAssests(assests);
+    }
+    if (!climateData) {
+      getData();
+    }
+  }, [climateData]);
+
+  useEffect(() => {
+    if (climateData) {
+      const filteredData = climateData.filter((point) => {
+        return (
+          ((point["Year"] - decade < 10 && point["Year"] - decade >= 0) ||
+          decade == 0
+            ? point
+            : null) &&
+          (point["Business Category"] == category || category == "All"
+            ? point
+            : null) &&
+          (point["Asset Name"] == asset || asset == "All" ? point : null) &&
+          (point["Region"] == region || region == "All" ? point : null) &&
+          (factor in point["Risk Factors"] || factor == "All" ? point : null)
+        );
+      });
+      setMapData(filteredData);
+    }
+  }, [climateData, decade, category, asset, region, factor]);
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://beta.nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800 hover:dark:bg-opacity-30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore the Next.js 13 playground.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
+    <main className="flex flex-col-reverse overflow-visible">
+      {" "}
+      <Suspense
+        fallback={
+          <div className="w-screen h-screen">
+            <Canvas>
+              <Loading3D />
+            </Canvas>
+          </div>
+        }
+      >
+        {climateData && isMap && (
+          <MapContainer data={mapData} region={region}></MapContainer>
+        )}
+        {isDataTable && <DataTable factor={factor} data={mapData}></DataTable>}
+        {isChart && <LineChart data={mapData} riskFactor={factor}></LineChart>}
+      </Suspense>
+      <div className="overflow-visible">
+        <MapHeader
+          setDecade={setDecade}
+          setCat={setCategory}
+          setDataTable={setDataTable}
+          setMap={setMap}
+          setChart={setChart}
+          setAsset={setAsset}
+          assests={assests}
+          setRegion={setRegion}
+          setFactors={setFactors}
+          factors={riskFactors}
+        ></MapHeader>
       </div>
     </main>
-  )
+  );
 }
