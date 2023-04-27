@@ -1,5 +1,5 @@
 import React from "react";
-import { GoogleMap, LoadScript } from "@react-google-maps/api";
+import { LoadScript, GoogleMap } from "@react-google-maps/api";
 import Markers from "./Markers";
 
 const containerStyle = {
