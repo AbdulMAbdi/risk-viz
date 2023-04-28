@@ -1,6 +1,7 @@
 import React from "react";
 import { LoadScript, GoogleMap } from "@react-google-maps/api";
 import Markers from "./Markers";
+import { useDataStore } from "../store/DataStore";
 
 const containerStyle = {
   width: "100vw",
@@ -39,8 +40,10 @@ const regionCenters = {
   },
 };
 
-function MapContainer({ data = [], region }) {
-  const markers = <Markers data={data}></Markers>;
+function MapContainer() {
+  const region = useDataStore((state) => state.region);
+  const markers = <Markers></Markers>;
+  console.log(region)
   return (
     <LoadScript googleMapsApiKey="AIzaSyD-9AzwQ4IdHUuW1aJ5eOvwNiI0TIoFHu4">
       <GoogleMap

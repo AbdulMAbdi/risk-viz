@@ -1,6 +1,6 @@
 import { DataGrid } from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
-
+import { useDataStore } from "../store/DataStore";
 
 function formatRiskFactors(data, factor) {
   const formatedData = data.map((marker) => {
@@ -15,8 +15,11 @@ function formatRiskFactors(data, factor) {
   });
   return formatedData;
 }
-export default function DataTable({ data, factor }) {
-
+export default function DataTable() {
+  const [filteredData, factor] = useDataStore((state) => [
+    state.filteredData,
+    state.factor,
+  ]);
   const columns = [
     { field: "Asset Name", headerName: "Asset Name", width: 240 },
     { field: "Lat", headerName: "Latitude", width: 70, type: "number" },
@@ -57,7 +60,7 @@ export default function DataTable({ data, factor }) {
           width: "100vw",
           height: "87vh",
         }}
-        rows={formatRiskFactors(data,factor)}
+        rows={formatRiskFactors(filteredData, factor)}
         columns={columns}
         initialState={{
           pagination: {
