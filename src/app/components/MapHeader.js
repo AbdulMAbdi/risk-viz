@@ -5,19 +5,15 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import Image from "next/image";
+import { useDataStore } from "../store/DataStore";
 
-export default function MapHeader({
-  setDecade,
-  setCat,
-  setDataTable,
-  setMap,
-  setChart,
-  setAsset,
-  assests,
-  setRegion,
-  setFactors,
-  factors,
-}) {
+export default function MapHeader({ setDataTable, setMap, setChart }) {
+  const [assetList, factorList, actions] = useDataStore((state) => [
+    state.assetList,
+    state.factorList,
+    state.actions,
+  ]);
+
   const [decadeLabel, setDecadeLabel] = useState("Decade");
   const [assetLabel, setAssetLabel] = useState("Asset Name");
   const [factorLabel, setFactorsLabel] = useState("Risk Factor");
@@ -45,39 +41,42 @@ export default function MapHeader({
     whiteSpace: "pre-line",
   };
 
-  const assetList = assests.map((asset, index) => (
+  const assetListElems = assetList.map((asset, index) => (
     <li
       key={index}
       class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
       onClick={() => {
         setAssetLabel(asset);
-        setAsset(asset);
+        actions.updateAsset(asset);
+        actions.filterData();
       }}
     >
       {asset}
     </li>
   ));
 
-  const regionList = regions.map((region, index) => (
+  const regionListElems = regions.map((region, index) => (
     <li
       key={index}
       class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
       onClick={() => {
         setRegionLabel(region);
-        setRegion(region);
+        actions.updateRegion(region);
+        actions.filterData();
       }}
     >
       {region}
     </li>
   ));
 
-  const factorList = factors.map((factor, index) => (
+  const factorListElems = factorList.map((factor, index) => (
     <li
       key={index}
       class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
       onClick={() => {
         setFactorsLabel(factor);
-        setFactors(factor);
+        actions.updateFactor(factor);
+        actions.filterData();
       }}
     >
       {factor}
@@ -104,12 +103,13 @@ export default function MapHeader({
                 class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
                 onClick={() => {
                   setAssetLabel("All Assets");
-                  setAsset("All");
+                  actions.updateAsset("All");
+                  actions.filterData();
                 }}
               >
                 All Assets
               </li>
-              {assetList}
+              {assetListElems}
             </ul>
           </div>
         </div>
@@ -130,12 +130,13 @@ export default function MapHeader({
                 class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
                 onClick={() => {
                   setRegionLabel("All Regions");
-                  setRegion("All");
+                  actions.updateRegion("All");
+                  actions.filterData();
                 }}
               >
                 All Regions
               </li>
-              {regionList}
+              {regionListElems}
             </ul>
           </div>
         </div>
@@ -156,12 +157,13 @@ export default function MapHeader({
                 class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
                 onClick={() => {
                   setFactorsLabel("Risk Factors - All");
-                  setFactors("All");
+                  actions.updateFactors("All");
+                  actions.filterData();
                 }}
               >
                 Risk Factors
               </li>
-              {factorList}
+              {factorListElems}
             </ul>
           </div>
         </div>
@@ -181,7 +183,8 @@ export default function MapHeader({
               <li
                 class=""
                 onClick={() => {
-                  setDecade(2030);
+                  actions.updateDecade(2030);
+                  actions.filterData();
                   setDecadeLabel("Decade - 2030's");
                 }}
               >
@@ -195,7 +198,8 @@ export default function MapHeader({
               <li
                 class=""
                 onClick={() => {
-                  setDecade(2040);
+                  actions.updateDecade(2040);
+                  actions.filterData();
                   setDecadeLabel("Decade - 2040's");
                 }}
               >
@@ -209,7 +213,8 @@ export default function MapHeader({
               <li
                 class=""
                 onClick={() => {
-                  setDecade(2050);
+                  actions.updateDecade(2050);
+                  actions.filterData();
                   setDecadeLabel("Decade - 2050's");
                 }}
               >
@@ -223,7 +228,8 @@ export default function MapHeader({
               <li
                 class=""
                 onClick={() => {
-                  setDecade(2060);
+                  actions.updateDecade(2060);
+                  actions.filterData();
                   setDecadeLabel("Decade - 2060's");
                 }}
               >
@@ -237,7 +243,8 @@ export default function MapHeader({
               <li
                 class=""
                 onClick={() => {
-                  setDecade(2070);
+                  actions.updateDecade(2070);
+                  actions.filterData();
                   setDecadeLabel("Decade - 2070's");
                 }}
               >
@@ -251,7 +258,8 @@ export default function MapHeader({
               <li
                 class=""
                 onClick={() => {
-                  setDecade(0);
+                  actions.updateDecade(0);
+                  actions.filterData();
                   setDecadeLabel("Decade - All");
                 }}
               >
@@ -281,7 +289,8 @@ export default function MapHeader({
               <li
                 class=""
                 onClick={() => {
-                  setCat("Energy");
+                  actions.updateCategory("Energy");
+                  actions.filterData();
                   setbusinessLabel("Energy");
                 }}
               >
@@ -295,7 +304,8 @@ export default function MapHeader({
               <li
                 class=""
                 onClick={() => {
-                  setCat("Finance");
+                  actions.updateCategory("Finance");
+                  actions.filterData();
                   setbusinessLabel("Finance");
                 }}
               >
@@ -309,7 +319,8 @@ export default function MapHeader({
               <li
                 class=""
                 onClick={() => {
-                  setCat("Healthcare");
+                  actions.updateCategory("Healthcare");
+                  actions.filterData();
                   setbusinessLabel("Healthcare");
                 }}
               >
@@ -323,7 +334,8 @@ export default function MapHeader({
               <li
                 class=""
                 onClick={() => {
-                  setCat("Manufacturing");
+                  actions.updateCategory("Manufacturing");
+                  actions.filterData();
                   setbusinessLabel("Manufacturing");
                 }}
               >
@@ -337,7 +349,8 @@ export default function MapHeader({
               <li
                 class=""
                 onClick={() => {
-                  setCat("Retail");
+                  actions.updateCategory("Retail");
+                  actions.filterData();
                   setbusinessLabel("Retail");
                 }}
               >
@@ -351,7 +364,8 @@ export default function MapHeader({
               <li
                 class=""
                 onClick={() => {
-                  setCat("Technology");
+                  actions.updateCategory("Technology");
+                  actions.filterData();
                   setbusinessLabel("Technology");
                 }}
               >
@@ -365,7 +379,8 @@ export default function MapHeader({
               <li
                 class=""
                 onClick={() => {
-                  setCat("All");
+                  actions.updateCategory("All");
+                  actions.filterData();
                   setbusinessLabel("Business Cat. - All");
                 }}
               >

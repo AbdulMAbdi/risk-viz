@@ -10,7 +10,7 @@ import {
   Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-
+import { useDataStore } from "../store/DataStore";
 
 ChartJS.register(
   CategoryScale,
@@ -22,9 +22,14 @@ ChartJS.register(
   Legend
 );
 
-export default function LineChart({ data, riskFactor }) {
-  const totalDuration = data.length * 100 < 10000 ? data.length * 100 : 10000;
-  const delayBetweenPoints = totalDuration / data.length;
+export default function LineChart() {
+  const [filteredData, factor] = useDataStore((state) => [
+    state.filteredData,
+    state.factor,
+  ]);
+  const totalDuration =
+    filteredData.length * 100 < 10000 ? filteredData.length * 100 : 10000;
+  const delayBetweenPoints = totalDuration / filteredData.length;
   const previousY = (ctx) =>
     ctx.index === 0
       ? ctx.chart.scales.y.getPixelForValue(100)
@@ -63,28 +68,12 @@ export default function LineChart({ data, riskFactor }) {
   const options = {
     responsive: true,
     plugins: {
-      tooltip: {
-        label: function (context) {
-          let label = context.dataset.label || "";
-
-          if (label) {
-            label += ": ";
-          }
-          if (context.parsed.y !== null) {
-            label += new Intl.NumberFormat("en-US", {
-              style: "currency",
-              currency: "USD",
-            }).format(context.parsed.y);
-          }
-          return label;
-        },
-      },
       legend: {
         position: false,
       },
       title: {
         display: true,
-        text: riskFactor + " Risk Ratings over Time",
+        text: factor + " Risk Ratings over Time",
       },
     },
     animation,
@@ -106,7 +95,7 @@ export default function LineChart({ data, riskFactor }) {
       y: {
         type: "linear",
         title: {
-          text: "Risk Rating - " + riskFactor,
+          text: "Risk Rating - " + factor,
           color: "#1e3a8a",
           display: true,
           align: "center",
@@ -131,13 +120,10 @@ export default function LineChart({ data, riskFactor }) {
   };
 
   let ratingDecadePair = [];
-  data.map((point) => {
+  filteredData.map((point) => {
     ratingDecadePair.push({
       x: point["Year"],
-      y:
-        riskFactor == "All"
-          ? point["Risk Rating"]
-          : point["Risk Factors"][riskFactor],
+      y: factor == "All" ? point["Risk Rating"] : point["Risk Factors"][factor],
     });
   });
   ratingDecadePair.sort((a, b) => {
