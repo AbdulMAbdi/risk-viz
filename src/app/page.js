@@ -12,6 +12,7 @@ import {
 import MapHeader from "./components/MapHeader";
 import DataTable from "./components/DataTable";
 import LineChart from "./components/LineChart";
+import AverageChart from "./components/AverageChart";
 import { useDataStore } from "./store/DataStore";
 
 const MapContainer = React.lazy(() => import("./components/MapContainer"));
@@ -23,6 +24,7 @@ export default function Home() {
   ]);
   const [isDataTable, setDataTable] = useState(false);
   const [isChart, setChart] = useState(false);
+  const [isAverage, setAverage] = useState(false);
   const [isMap, setMap] = useState(true);
 
   useEffect(() => {
@@ -70,12 +72,14 @@ export default function Home() {
         {sourceData && isMap && <MapContainer></MapContainer>}
         {isDataTable && <DataTable></DataTable>}
         {isChart && <LineChart></LineChart>}
+        {isAverage && <AverageChart></AverageChart>}
       </Suspense>
       <div className="overflow-visible">
         <MapHeader
           setDataTable={setDataTable}
           setMap={setMap}
           setChart={setChart}
+          setAverage={setAverage}
         ></MapHeader>
       </div>
     </main>

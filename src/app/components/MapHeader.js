@@ -7,7 +7,12 @@ import Modal from "@mui/material/Modal";
 import Image from "next/image";
 import { useDataStore } from "../store/DataStore";
 
-export default function MapHeader({ setDataTable, setMap, setChart }) {
+export default function MapHeader({
+  setDataTable,
+  setMap,
+  setChart,
+  setAverage,
+}) {
   const [assetList, factorList, actions] = useDataStore((state) => [
     state.assetList,
     state.factorList,
@@ -85,7 +90,7 @@ export default function MapHeader({ setDataTable, setMap, setChart }) {
 
   return (
     <nav class="max-h-24 bg-gray-50  bg-opacity-50 border-black border-2 dark:bg-gray-900 dark:border-gray-700 overflow-visible">
-      <div class="max-w-full flex flex-wrap items-center justify-between mx-12 p-1 overflow-visible">
+      <div class="max-w-full flex flex-wrap items-center justify-between mx-4 p-1 overflow-visible">
         <div class="p-1">
           <div class="group inline-block relative">
             <button class="bg-blue-400 text-gray-700 font-semibold py-2 px-4 rounded inline-flex items-center">
@@ -157,7 +162,7 @@ export default function MapHeader({ setDataTable, setMap, setChart }) {
                 class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
                 onClick={() => {
                   setFactorsLabel("Risk Factors - All");
-                  actions.updateFactors("All");
+                  actions.updateFactor("All");
                   actions.filterData();
                 }}
               >
@@ -179,96 +184,66 @@ export default function MapHeader({ setDataTable, setMap, setChart }) {
                 <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
               </svg>
             </button>
-            <ul class="absolute hidden text-gray-700 pt-1 group-hover:block overflow-visible">
+            <ul class="absolute hidden text-gray-700 pt-1 object-fill group-hover:block max-h-96 overflow-y-auto overscroll-contain">
               <li
-                class=""
+                class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
                 onClick={() => {
                   actions.updateDecade(2030);
                   actions.filterData();
                   setDecadeLabel("Decade - 2030's");
                 }}
               >
-                <a
-                  class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
-                  href="#"
-                >
-                  2030&apos;s
-                </a>
+                2030&apos;s
               </li>
               <li
-                class=""
+                class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
                 onClick={() => {
                   actions.updateDecade(2040);
                   actions.filterData();
                   setDecadeLabel("Decade - 2040's");
                 }}
               >
-                <a
-                  class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
-                  href="#"
-                >
-                  2040&apos;s
-                </a>
+                2040&apos;s
               </li>
               <li
-                class=""
+                class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
                 onClick={() => {
                   actions.updateDecade(2050);
                   actions.filterData();
                   setDecadeLabel("Decade - 2050's");
                 }}
               >
-                <a
-                  class="rounded-b bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
-                  href="#"
-                >
-                  2050&apos;s
-                </a>
+                2050&apos;s
               </li>
               <li
-                class=""
+                class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
                 onClick={() => {
                   actions.updateDecade(2060);
                   actions.filterData();
                   setDecadeLabel("Decade - 2060's");
                 }}
               >
-                <a
-                  class="rounded-b bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
-                  href="#"
-                >
-                  2060&apos;s
-                </a>
+                2060&apos;s
               </li>
               <li
-                class=""
+                class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
                 onClick={() => {
                   actions.updateDecade(2070);
                   actions.filterData();
                   setDecadeLabel("Decade - 2070's");
                 }}
               >
-                <a
-                  class="rounded-b bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
-                  href="#"
-                >
-                  2070&apos;s
-                </a>
+                2070&apos;s
               </li>
               <li
-                class=""
+                class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
                 onClick={() => {
                   actions.updateDecade(0);
                   actions.filterData();
                   setDecadeLabel("Decade - All");
                 }}
               >
-                <a
-                  class="rounded-b bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
-                  href="#"
-                >
-                  All
-                </a>
+                All
               </li>
             </ul>
           </div>
@@ -287,109 +262,74 @@ export default function MapHeader({ setDataTable, setMap, setChart }) {
             </button>
             <ul class="absolute hidden text-gray-700 pt-1 group-hover:block overflow-visible">
               <li
-                class=""
+                class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
                 onClick={() => {
                   actions.updateCategory("Energy");
                   actions.filterData();
                   setbusinessLabel("Energy");
                 }}
               >
-                <a
-                  class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
-                  href="#"
-                >
-                  Energy
-                </a>
+                Energy
               </li>
               <li
-                class=""
+                class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
                 onClick={() => {
                   actions.updateCategory("Finance");
                   actions.filterData();
                   setbusinessLabel("Finance");
                 }}
               >
-                <a
-                  class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
-                  href="#"
-                >
-                  Finance
-                </a>
+                Finance
               </li>
               <li
-                class=""
+                class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
                 onClick={() => {
                   actions.updateCategory("Healthcare");
                   actions.filterData();
                   setbusinessLabel("Healthcare");
                 }}
               >
-                <a
-                  class="rounded-b bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
-                  href="#"
-                >
-                  Healthcare
-                </a>
+                Healthcare
               </li>
               <li
-                class=""
+                class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
                 onClick={() => {
                   actions.updateCategory("Manufacturing");
                   actions.filterData();
                   setbusinessLabel("Manufacturing");
                 }}
               >
-                <a
-                  class="rounded-b bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
-                  href="#"
-                >
-                  Manufacturing
-                </a>
+                Manufacturing
               </li>
               <li
-                class=""
+                class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
                 onClick={() => {
                   actions.updateCategory("Retail");
                   actions.filterData();
                   setbusinessLabel("Retail");
                 }}
               >
-                <a
-                  class="rounded-b bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
-                  href="#"
-                >
-                  Retail
-                </a>
+                Retail
               </li>
               <li
-                class=""
+                class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
                 onClick={() => {
                   actions.updateCategory("Technology");
                   actions.filterData();
                   setbusinessLabel("Technology");
                 }}
               >
-                <a
-                  class="rounded-b bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
-                  href="#"
-                >
-                  Technology
-                </a>
+                Technology
               </li>
               <li
-                class=""
+                class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
                 onClick={() => {
                   actions.updateCategory("All");
                   actions.filterData();
                   setbusinessLabel("Business Cat. - All");
                 }}
               >
-                <a
-                  class="rounded-b bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
-                  href="#"
-                >
-                  All
-                </a>
+                All
               </li>
             </ul>
           </div>
@@ -407,13 +347,14 @@ export default function MapHeader({ setDataTable, setMap, setChart }) {
           </div>
         </div>
         <div class="p-1">
-          <div class="group inline-block relative pl-36">
+          <div class="group inline-block relative pl-8">
             <button
               class="bg-blue-400 text-gray-700 font-semibold py-2 px-4 rounded inline-flex items-center"
               onClick={() => {
                 setDataTable(true);
                 setMap(false);
                 setChart(false);
+                setAverage(false);
               }}
             >
               <span class="mr-1">Data Table</span>
@@ -428,6 +369,7 @@ export default function MapHeader({ setDataTable, setMap, setChart }) {
                 setChart(true);
                 setDataTable(false);
                 setMap(false);
+                setAverage(false);
               }}
             >
               <span class="mr-1">Line Chart</span>
@@ -439,9 +381,28 @@ export default function MapHeader({ setDataTable, setMap, setChart }) {
             <button
               class="bg-blue-400 text-gray-700 font-semibold py-2 px-4 rounded inline-flex items-center"
               onClick={() => {
+                setChart(false);
+                setDataTable(false);
+                setMap(false);
+                setAverage(true);
+                actions.updateFactorCount();
+                actions.sumData();
+                actions.averageData();
+              }}
+            >
+              <span class="mr-1">Averages Chart</span>
+            </button>
+          </div>
+        </div>
+        <div class="p-1">
+          <div class="group inline-block relative">
+            <button
+              class="bg-blue-400 text-gray-700 font-semibold py-2 px-4 rounded inline-flex items-center"
+              onClick={() => {
                 setMap(true);
                 setDataTable(false);
                 setChart(false);
+                setAverage(false);
               }}
             >
               <span class="mr-1">Map</span>
@@ -535,6 +496,8 @@ export default function MapHeader({ setDataTable, setMap, setChart }) {
                   {"The Line Chart button will represent the data on a line graph. Selected Filters will still apply and filters can continue to be applied and updated" +
                     "\n" +
                     "The Data Table button will show the data in a table where selected filters will apply and filters can continue to be applied. Sorting by descending or ascending order is available on columns" +
+                    "\n" +
+                    "The Averages Chart button will allow you to see what the average risk rating for specific risk factors are. All the filter options from the dropdown menus will apply when calculating averages" +
                     "\n" +
                     "The Map button will bring you back to the map with the location markers"}
                 </Typography>
