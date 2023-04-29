@@ -1,8 +1,10 @@
 import { create } from "zustand";
 
-const useDataStore = create((set) => ({
+const useDataStore = create((set, get) => ({
   sourceData: "",
   filteredData: [],
+  averagedData: {},
+  sumedData: {},
   asset: "All",
   category: "All",
   region: "All",
@@ -10,6 +12,7 @@ const useDataStore = create((set) => ({
   decade: 0,
   factorList: [],
   assetList: [],
+  factorCount: {},
   actions: {
     updateAsset: (asset) => set(() => ({ asset: asset })),
     updateCategory: (category) => set(() => ({ category: category })),
@@ -44,6 +47,57 @@ const useDataStore = create((set) => ({
           );
         }),
       })),
+    sumData: () => {
+      const sumedData = {};
+      get().filteredData.map((point) => {
+        for (const prop in point["Risk Factors"]) {
+          if (!sumedData.hasOwnProperty(prop)) {
+            sumedData[prop] = point["Risk Factors"][prop];
+          } else {
+            sumedData[prop] += point["Risk Factors"][prop];
+          }
+        }
+      }),
+        set((state) => ({
+          sumedData: sumedData,
+        }));
+    },
+    updateFactorCount: () => {
+      const factorCount = {};
+      get().factorList.map((factor) => {
+        get().filteredData.forEach((point) => {
+          if (point["Risk Factors"].hasOwnProperty(factor)) {
+            if (!factorCount[factor]) {
+              factorCount[factor] = 1;
+            } else {
+              factorCount[factor] += 1;
+            }
+          }
+        });
+      });
+      set((state) => ({
+        factorCount: factorCount,
+      }));
+    },
+
+    averageData: () => {
+      const averagedData = {};
+      for (const prop in get().sumedData) {
+        if (get().factorCount.hasOwnProperty(prop)) {
+          console.log(
+            get().sumedData[prop],
+            get().factorCount[prop],
+            get().sumedData[prop] / get().factorCount[prop]
+          );
+          averagedData[prop] = get().sumedData[prop] / get().factorCount[prop];
+        } else {
+          averagedData[prop] = 0;
+        }
+      }
+      set((state) => ({
+        averagedData: averagedData,
+      }));
+    },
   },
 }));
 
