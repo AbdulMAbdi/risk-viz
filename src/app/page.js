@@ -29,7 +29,6 @@ export default function Home() {
 
   useEffect(() => {
     async function getData() {
-      console.log("here");
       let data = await dataHandler();
       let assests;
       let factors;

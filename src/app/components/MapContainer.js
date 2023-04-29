@@ -43,7 +43,6 @@ const regionCenters = {
 function MapContainer() {
   const region = useDataStore((state) => state.region);
   const markers = <Markers></Markers>;
-  console.log(region)
   return (
     <LoadScript googleMapsApiKey="AIzaSyD-9AzwQ4IdHUuW1aJ5eOvwNiI0TIoFHu4">
       <GoogleMap

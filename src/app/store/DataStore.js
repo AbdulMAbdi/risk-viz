@@ -84,11 +84,6 @@ const useDataStore = create((set, get) => ({
       const averagedData = {};
       for (const prop in get().sumedData) {
         if (get().factorCount.hasOwnProperty(prop)) {
-          console.log(
-            get().sumedData[prop],
-            get().factorCount[prop],
-            get().sumedData[prop] / get().factorCount[prop]
-          );
           averagedData[prop] = get().sumedData[prop] / get().factorCount[prop];
         } else {
           averagedData[prop] = 0;
