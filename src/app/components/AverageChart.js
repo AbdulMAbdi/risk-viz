@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useMemo, useState } from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -11,6 +11,7 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import { useDataStore } from "../store/DataStore";
+import { color } from "@mui/system";
 
 ChartJS.register(
   CategoryScale,
@@ -31,7 +32,19 @@ export default function AverageChart() {
       state.averagedData,
       state.actions,
     ]);
-
+  const [colors, setColors] = useState();
+  const backgroundColors = {
+    Earthquake: "rgba(209, 178, 111,0.75)", //
+    "Extreme heat": "rgba(206, 32, 41,0.75)", //
+    Wildfire: "rgba(255, 102, 0,0.75)", //
+    Tornado: "rgba(191, 119, 246,0.75)", //
+    Flooding: "rgba(0, 63, 255,0.75)", //
+    Volcano: "rgba(228, 34, 23,0.75)", //
+    Hurricane: "rgba(135, 124, 123,0.75)", //
+    Drought: "rgba(254, 211, 60,0.75)", //
+    "Extreme cold": "rgba(54, 139, 193,0.75)",
+    "Sea level rise": "rgba(9, 88, 89,0.75)", //
+  };
   const options = {
     responsive: true,
     plugins: {
@@ -75,33 +88,29 @@ export default function AverageChart() {
     },
   };
 
-  const barData = {
-    labels: factorList,
-    datasets: [
-      {
-        borderColor: "rgb(53, 162, 235)",
-        borderWidth: 1,
-        backgroundColor: [
-          "rgba(209, 178, 111,0.75)",
-          "rgba(206, 32, 41,0.75)",
-          "rgba(255, 102, 0,0.75)",
-          "rgba(191, 119, 246,0.75)",
-          "rgba(0, 63, 255,0.75)",
-          "rgba(228, 34, 23,0.75)",
-          "rgba(135, 124, 123,0.75)",
-          "rgba(254, 211, 60,0.75)",
-          "rgba(54, 139, 193,0.75)",
-          "rgba(9, 88, 89,0.75)",
-        ],
-        radius: 3,
-        data: averagedData,
-      },
-    ],
-  };
-  useEffect(() => {
+  const barData = useMemo(() => {
     actions.updateFactorCount();
     actions.sumData();
     actions.averageData();
+    let colors = [];
+    for (const key in averagedData) {
+      console.log(key);
+      colors.push(backgroundColors[key]);
+    }
+    const barData = {
+      labels: Object.keys(averagedData),
+      datasets: [
+        {
+          borderColor: "rgb(53, 162, 235)",
+          borderWidth: 1,
+          backgroundColor: colors,
+          radius: 3,
+          data: averagedData,
+        },
+      ],
+    };
+
+    return barData;
   }, [filteredData]);
 
   return (

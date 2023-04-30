@@ -81,7 +81,7 @@ const useDataStore = create((set, get) => ({
     },
 
     averageData: () => {
-      const averagedData = {};
+      let averagedData = {};
       for (const prop in get().sumedData) {
         if (get().factorCount.hasOwnProperty(prop)) {
           averagedData[prop] = get().sumedData[prop] / get().factorCount[prop];
@@ -89,6 +89,10 @@ const useDataStore = create((set, get) => ({
           averagedData[prop] = 0;
         }
       }
+      //sort the data for better viewing on graph
+      averagedData = Object.fromEntries(
+        Object.entries(averagedData).sort(([, a], [, b]) => b - a)
+      );
       set((state) => ({
         averagedData: averagedData,
       }));
