@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo } from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -11,7 +11,6 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import { useDataStore } from "../store/DataStore";
-import { color } from "@mui/system";
 
 ChartJS.register(
   CategoryScale,
@@ -32,7 +31,7 @@ export default function AverageChart() {
       state.averagedData,
       state.actions,
     ]);
-  const [colors, setColors] = useState();
+
   const backgroundColors = {
     Earthquake: "rgba(209, 178, 111,0.75)", //
     "Extreme heat": "rgba(206, 32, 41,0.75)", //
@@ -89,12 +88,8 @@ export default function AverageChart() {
   };
 
   const barData = useMemo(() => {
-    actions.updateFactorCount();
-    actions.sumData();
-    actions.averageData();
     let colors = [];
     for (const key in averagedData) {
-      console.log(key);
       colors.push(backgroundColors[key]);
     }
     const barData = {
@@ -109,8 +104,13 @@ export default function AverageChart() {
         },
       ],
     };
-
     return barData;
+  }, [averagedData]);
+
+  useEffect(() => {
+    actions.updateFactorCount();
+    actions.sumData();
+    actions.averageData();
   }, [filteredData]);
 
   return (
