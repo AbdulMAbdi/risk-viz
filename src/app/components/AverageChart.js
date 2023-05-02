@@ -154,10 +154,10 @@ export default function AverageChart() {
 
   return (
     <>
-      <div class="p-1">
+      <div class="shadow-xl focus:shadow-inner p-1">
         <div class="group inline-block relative pl-40">
           <button
-            class="bg-blue-400 text-gray-700 font-semibold py-2 px-4 rounded inline-flex items-center"
+            class="shadow-xl shadow-blue-500/25 bg-blue-400 text-gray-700 font-semibold py-2 px-4 inline-flex items-center"
             onClick={() => {
               setInfoOpen(true);
             }}

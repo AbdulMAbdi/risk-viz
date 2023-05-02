@@ -49,7 +49,7 @@ export default function MapHeader({
   const assetListElems = assetList.map((asset, index) => (
     <li
       key={index}
-      class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
+      class="bg-cyan-100 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
       onClick={() => {
         setAssetLabel(asset);
         actions.updateAsset(asset);
@@ -63,7 +63,7 @@ export default function MapHeader({
   const regionListElems = regions.map((region, index) => (
     <li
       key={index}
-      class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
+      class="bg-cyan-100 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
       onClick={() => {
         setRegionLabel(region);
         actions.updateRegion(region);
@@ -77,7 +77,7 @@ export default function MapHeader({
   const factorListElems = factorList.map((factor, index) => (
     <li
       key={index}
-      class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
+      class="bg-cyan-100 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
       onClick={() => {
         setFactorsLabel(factor);
         actions.updateFactor(factor);
@@ -89,11 +89,11 @@ export default function MapHeader({
   ));
 
   return (
-    <nav class="max-h-24 bg-gray-50  bg-opacity-50 border-black border-2 dark:bg-gray-900 dark:border-gray-700 overflow-visible">
+    <nav class="max-h-24 bg-cyan-200  bg-opacity-25 border-black border-2 shadow-lg dark:bg-gray-900 dark:border-gray-700 overflow-visible">
       <div class="max-w-full flex flex-wrap items-center justify-between mx-4 p-1 overflow-visible">
         <div class="p-1">
-          <div class="group inline-block relative">
-            <button class="bg-blue-400 text-gray-700 font-semibold py-2 px-4 rounded inline-flex items-center">
+          <div class="flex-1 group inline-block relative">
+            <button class="flex-1 bg-blue-400 text-gray-700 font-semibold py-2 px-4 shadow-lg inline-flex items-center">
               <span class="mr-1">{assetLabel}</span>
               <svg
                 class="fill-current h-4 w-4"
@@ -103,9 +103,9 @@ export default function MapHeader({
                 <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
               </svg>
             </button>
-            <ul class="absolute hidden text-gray-700 pt-1 group-hover:block text-sm max-h-96 overflow-y-auto overscroll-contain">
+            <ul class="flex-1 absolute hidden text-gray-700 pt-1 group-hover:block text-sm max-h-96 overflow-y-auto overscroll-contain">
               <li
-                class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
+                class="bg-cyan-100 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
                 onClick={() => {
                   setAssetLabel("All Assets");
                   actions.updateAsset("All");
@@ -120,7 +120,7 @@ export default function MapHeader({
         </div>
         <div class="p-1">
           <div class="group inline-block relative">
-            <button class="bg-blue-400 text-gray-700 font-semibold py-2 px-4 rounded inline-flex items-center">
+            <button class="bg-blue-400 text-gray-700 font-semibold py-2 px-4 shadow-xl shadow-blue-500/25 inline-flex items-center">
               <span class="mr-1">{regionLabel}</span>
               <svg
                 class="fill-current h-4 w-4"
@@ -132,7 +132,7 @@ export default function MapHeader({
             </button>
             <ul class="absolute hidden text-gray-700 pt-1 group-hover:block text-sm max-h-96 overflow-y-auto overscroll-contain">
               <li
-                class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
+                class="bg-cyan-100 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
                 onClick={() => {
                   setRegionLabel("All Regions");
                   actions.updateRegion("All");
@@ -147,7 +147,7 @@ export default function MapHeader({
         </div>
         <div class="p-1">
           <div class="group inline-block relative">
-            <button class="bg-blue-400 text-gray-700 font-semibold py-2 px-4 rounded inline-flex items-center">
+            <button class="bg-blue-400 text-gray-700 font-semibold py-2 px-4 shadow-xl shadow-blue-500/25 inline-flex items-center">
               <span class="mr-1">{factorLabel}</span>
               <svg
                 class="fill-current h-4 w-4"
@@ -159,7 +159,7 @@ export default function MapHeader({
             </button>
             <ul class="absolute hidden text-gray-700 pt-1 group-hover:block text-sm max-h-96 overflow-y-auto overscroll-contain">
               <li
-                class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
+                class="bg-cyan-100 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
                 onClick={() => {
                   setFactorsLabel("Risk Factors - All");
                   actions.updateFactor("All");
@@ -174,7 +174,7 @@ export default function MapHeader({
         </div>
         <div class="p-1">
           <div class="group inline-block relative">
-            <button class="bg-blue-400 text-gray-700 font-semibold py-2 px-4 rounded inline-flex items-center">
+            <button class="bg-blue-400 text-gray-700 font-semibold py-2 px-4 shadow-xl shadow-blue-500/25 inline-flex items-center">
               <span class="mr-1">{decadeLabel}</span>
               <svg
                 class="fill-current h-4 w-4"
@@ -184,9 +184,9 @@ export default function MapHeader({
                 <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
               </svg>
             </button>
-            <ul class="absolute hidden text-gray-700 pt-1 object-fill group-hover:block max-h-96 overflow-y-auto overscroll-contain">
+            <ul class="w-28 absolute hidden text-gray-700 pt-1 object-fill group-hover:block max-h-96 overflow-y-auto overscroll-contain">
               <li
-                class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
+                class="bg-cyan-100 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
                 onClick={() => {
                   actions.updateDecade(2030);
                   actions.filterData();
@@ -196,7 +196,7 @@ export default function MapHeader({
                 2030&apos;s
               </li>
               <li
-                class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
+                class="bg-cyan-100 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
                 onClick={() => {
                   actions.updateDecade(2040);
                   actions.filterData();
@@ -206,7 +206,7 @@ export default function MapHeader({
                 2040&apos;s
               </li>
               <li
-                class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
+                class="bg-cyan-100 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
                 onClick={() => {
                   actions.updateDecade(2050);
                   actions.filterData();
@@ -216,7 +216,7 @@ export default function MapHeader({
                 2050&apos;s
               </li>
               <li
-                class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
+                class="bg-cyan-100 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
                 onClick={() => {
                   actions.updateDecade(2060);
                   actions.filterData();
@@ -226,7 +226,7 @@ export default function MapHeader({
                 2060&apos;s
               </li>
               <li
-                class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
+                class="bg-cyan-100 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
                 onClick={() => {
                   actions.updateDecade(2070);
                   actions.filterData();
@@ -236,7 +236,7 @@ export default function MapHeader({
                 2070&apos;s
               </li>
               <li
-                class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
+                class="bg-cyan-100 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
                 onClick={() => {
                   actions.updateDecade(0);
                   actions.filterData();
@@ -250,7 +250,7 @@ export default function MapHeader({
         </div>
         <div class="p-1">
           <div class="group inline-block relative">
-            <button class="bg-blue-400 text-gray-700 font-semibold py-2 px-4 rounded inline-flex items-center">
+            <button class="flex-1 bg-blue-400 text-gray-700 font-semibold py-2 px-4 shadow-xl shadow-blue-500/25 inline-flex items-center">
               <span class="mr-1">{businessLabel}</span>
               <svg
                 class="fill-current h-4 w-4"
@@ -260,9 +260,9 @@ export default function MapHeader({
                 <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
               </svg>
             </button>
-            <ul class="absolute hidden text-gray-700 pt-1 group-hover:block overflow-visible">
+            <ul class="flex-1 w-48 absolute hidden text-gray-700 pt-1 group-hover:block overflow-visible">
               <li
-                class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
+                class="bg-cyan-100 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
                 onClick={() => {
                   actions.updateCategory("Energy");
                   actions.filterData();
@@ -272,7 +272,7 @@ export default function MapHeader({
                 Energy
               </li>
               <li
-                class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
+                class="bg-cyan-100 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
                 onClick={() => {
                   actions.updateCategory("Finance");
                   actions.filterData();
@@ -282,7 +282,7 @@ export default function MapHeader({
                 Finance
               </li>
               <li
-                class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
+                class="bg-cyan-100 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
                 onClick={() => {
                   actions.updateCategory("Healthcare");
                   actions.filterData();
@@ -292,7 +292,7 @@ export default function MapHeader({
                 Healthcare
               </li>
               <li
-                class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
+                class="bg-cyan-100 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
                 onClick={() => {
                   actions.updateCategory("Manufacturing");
                   actions.filterData();
@@ -302,7 +302,7 @@ export default function MapHeader({
                 Manufacturing
               </li>
               <li
-                class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
+                class="bg-cyan-100 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
                 onClick={() => {
                   actions.updateCategory("Retail");
                   actions.filterData();
@@ -312,7 +312,7 @@ export default function MapHeader({
                 Retail
               </li>
               <li
-                class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
+                class="bg-cyan-100 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
                 onClick={() => {
                   actions.updateCategory("Technology");
                   actions.filterData();
@@ -322,7 +322,7 @@ export default function MapHeader({
                 Technology
               </li>
               <li
-                class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
+                class="bg-cyan-100 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
                 onClick={() => {
                   actions.updateCategory("All");
                   actions.filterData();
@@ -349,7 +349,7 @@ export default function MapHeader({
         <div class="p-1">
           <div class="group inline-block relative pl-8">
             <button
-              class="bg-blue-400 text-gray-700 font-semibold py-2 px-4 rounded inline-flex items-center"
+              class="bg-blue-400 text-gray-700 font-semibold py-2 px-4 shadow-xl shadow-blue-500/25 focus:shadow-inner inline-flex items-center"
               onClick={() => {
                 setDataTable(true);
                 setMap(false);
@@ -364,7 +364,7 @@ export default function MapHeader({
         <div class="p-1">
           <div class="group inline-block relative">
             <button
-              class="bg-blue-400 text-gray-700 font-semibold py-2 px-4 rounded inline-flex items-center"
+              class="bg-blue-400 text-gray-700 font-semibold py-2 px-4 shadow-xl shadow-blue-500/25 focus:shadow-inner inline-flex items-center"
               onClick={() => {
                 setChart(true);
                 setDataTable(false);
@@ -379,7 +379,7 @@ export default function MapHeader({
         <div class="p-1">
           <div class="group inline-block relative">
             <button
-              class="bg-blue-400 text-gray-700 font-semibold py-2 px-4 rounded inline-flex items-center"
+              class="bg-blue-400 text-gray-700 font-semibold py-2 px-4 shadow-xl shadow-blue-500/25 focus:shadow-inner inline-flex items-center"
               onClick={() => {
                 setChart(false);
                 setDataTable(false);
@@ -397,7 +397,7 @@ export default function MapHeader({
         <div class="p-1">
           <div class="group inline-block relative">
             <button
-              class="bg-blue-400 text-gray-700 font-semibold py-2 px-4 rounded inline-flex items-center"
+              class="bg-blue-400 text-gray-700 font-semibold py-2 px-4 shadow-xl shadow-blue-500/25 focus:shadow-inner inline-flex items-center"
               onClick={() => {
                 setMap(true);
                 setDataTable(false);
@@ -412,7 +412,7 @@ export default function MapHeader({
         <div class="p-1">
           <div class="group inline-block relative pl-40">
             <button
-              class="bg-blue-400 text-gray-700 font-semibold py-2 px-4 rounded inline-flex items-center"
+              class="bg-blue-400 text-gray-700 font-semibold py-2 px-4 shadow-xl shadow-blue-500/25 inline-flex items-center"
               onClick={() => {
                 setInfoOpen(true);
               }}
