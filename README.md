@@ -35,7 +35,6 @@ The Data Table button will show the data in a table where selected filters will 
 
 The Averages Chart button will allow you to see what the average risk rating for specific risk factors are. All the filter options from the dropdown menus will apply when calculating averages
 
-The Data Table button will show the data in a table where selected filters will apply, and filters can continue to be applied. Sorting by descending or ascending order is available on columns. The risk factors column can be filtered to include data points that have only the chosen risk factor, this can also be accomplished by using the risk factor dropdown menu located in the navigation bar.
 
 ## Notes
 - The sample data is manipulated in the code to allow for a better representation of the data. Specifically, the location data is randomized evenly across the regions to allow for a better visualization of the markers on the map. The year data is also randomized so that there are more years represented besides just the first year of every decade.
@@ -52,5 +51,8 @@ Various code examples and demonstrations from the following documentation was us
 - [PapaParse](https://www.papaparse.com/docs)
 - [React](https://react.dev/reference/react)
 - [Next](https://nextjs.org/docs/)
+- [React-Chartjs](https://react-chartjs-2.js.org/examples)
+- [ChartJs](https://www.chartjs.org/docs/latest/)
+
 
 
