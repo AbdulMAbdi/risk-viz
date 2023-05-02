@@ -43,8 +43,9 @@ const regionCenters = {
 function MapContainer() {
   const region = useDataStore((state) => state.region);
   const markers = <Markers></Markers>;
+ 
   return (
-    <LoadScript googleMapsApiKey="AIzaSyD-9AzwQ4IdHUuW1aJ5eOvwNiI0TIoFHu4">
+    <LoadScript googleMapsApiKey={process.env.GOOGLE_API_KEY}>
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={regionCenters[region]}
