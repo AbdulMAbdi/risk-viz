@@ -51,5 +51,8 @@ Various code examples and demonstrations from the following documentation was us
 - [PapaParse](https://www.papaparse.com/docs)
 - [React](https://react.dev/reference/react)
 - [Next](https://nextjs.org/docs/)
+- [React-Chartjs](https://react-chartjs-2.js.org/examples)
+- [ChartJs](https://www.chartjs.org/docs/latest/)
+
 
 
